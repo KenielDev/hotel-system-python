@@ -1,0 +1,3 @@
+Nome: Keniel Alves Nunes; CPF: 12218017911; Número de pessoas hospedadas: 3.0; Tipo de quarto: S; Dias de hospedagem: 4.0; Valor total: 1200.0; Status: R
+Nome: joao ; CPF: 102030; Número de pessoas hospedadas: 5; Tipo de quarto: D; Dias de hospedagem: 2.0; Valor total: 2000.0; Status: A
+Nome: keniel; CPF: 123; Número de pessoas hospedadas: 3; Tipo de quarto: D; Dias de hospedagem: 3; Valor total: 1800; Status: R
