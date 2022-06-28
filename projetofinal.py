@@ -1,8 +1,3 @@
-
-#Alerta caso o campo esteja vazio
-from gettext import find
-
-
 def funcaoAlert(variavel):
     while(variavel == ""):
       print("\033[0;31mEste é um campo obrigatório!\033[m")
@@ -17,17 +12,20 @@ def funcaoCadastra():
   insereCliente = input("Insira o nome do titular: ")
   funcaoAlert(insereCliente)
 
-  inserteCpf = input("Insira o cpf do titular: ")
-  validaCpf = len(inserteCpf)
-  while (validaCpf < 11):
+  insereCpf = input("Insira o cpf do titular: ")
+  validaCpf = len(insereCpf)
+  while (validaCpf < 11) or (validaCpf > 11):
+    funcaoAlert(insereCpf)
     print("\033[0;31mCampo incorreto!\033[m")
-    tipoQuarto = input("Por favor digite o CPF corretamente: ")
+    insereCpf = input("Por favor digite o CPF corretamente: ")
+    validaCpf = len(insereCpf)
   
   numeroPessoas = input("Insira o número de pessoas: ")
   funcaoAlert(numeroPessoas)
 
   tipoQuarto = input("Insira o tipo do quarto: ")
   while((tipoQuarto != "S") and (tipoQuarto != "s") and (tipoQuarto != "D") and (tipoQuarto != "d") and (tipoQuarto != "P") and (tipoQuarto != "p")):
+    funcaoAlert(tipoQuarto)
     print("\033[0;31mCampo incorreto!\033[m")
     tipoQuarto = input("Os tipos de quartos são S, D ou P, por favor insira um destes: ")
 
@@ -55,23 +53,26 @@ def funcaoCadastra():
 
   #insere o cadastro no banco
 
-  banco.writelines("Nome: {}; CPF: {}; Número de pessoas hospedadas: {}; Tipo de quarto: {}; Dias de hospedagem: {}; Valor total: {}; Status: {}".format(insereCliente,inserteCpf,numeroPessoas,tipoQuarto,numeroDias,valor,status[0]) + "\n")
+  banco.writelines("Nome: {}; CPF: {}; Número de pessoas hospedadas: {}; Tipo de quarto: {}; Dias de hospedagem: {}; Valor total: {}; Status: {}".format(insereCliente,insereCpf,numeroPessoas,tipoQuarto,numeroDias,valor,status[0]) + "\n")
   
   banco.close()
   
   print("Cadastro concluído com sucessso!")
 
 def funcaoCheckIn():
-  with open("database.txt", "w") as clientes:
+  with open("database.txt", "r") as banco:
 
-    cpf = input("Digite o cpf do cabra: ")
+    lista = banco.read()
 
-    for cpf in clientes:
+    status = "R"
+    newStatus = "A"
 
-      altera = cpf.writelines()
+    lista = lista.replace(status, newStatus)
 
-      return altera
-
+  with open('database.txt', 'w') as banco:
+  
+    banco.write(lista)
+    
 while True:
 
   print("""              
