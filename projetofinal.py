@@ -59,19 +59,29 @@ def funcaoCadastra():
   
   print("Cadastro concluído com sucessso!")
 
+
+def alterar_linha(arquivo,nLinha,novalinha):
+    with open(arquivo,'r') as f:
+        texto=f.readlines()
+    with open(arquivo,'w') as f:
+        for i in texto:
+            if texto.index(i) == nLinha:
+                f.write(novalinha +'\n')
+            else:
+                f.write(i)
+
+
 def funcaoCheckIn():
   with open("database.txt", "r") as banco:
-
-    lista = banco.read()
-
-    status = "R"
-    newStatus = "A"
-
-    lista = lista.replace(status, newStatus)
-
+    lista = banco.readlines()
   with open('database.txt', 'w') as banco:
-  
-    banco.write(lista)
+      cpf = input("cpf aq: ")
+      for cpf in lista:
+        if lista.index(cpf) == 1:
+          banco.write("Nome: teste; CPF: teste; Número de pessoas hospedadas: teste; Tipo de quarto: teste; Dias de hospedagem: teste; Valor total: teste; Status: teste" + "\n")
+          
+        else:
+          banco.write(lista)
     
 while True:
 
