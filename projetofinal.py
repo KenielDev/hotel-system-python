@@ -1,3 +1,5 @@
+import os
+
 def funcaoAlert(variavel):
     while(variavel == ""):
       print("\033[0;31mEste é um campo obrigatório!\033[m")
@@ -59,6 +61,44 @@ def funcaoCadastra():
   
   print("Cadastro concluído com sucessso!")
 
+def funcaoBusca():
+    arquivo = open("database.txt", "r")
+    listaClientes = arquivo.readlines()
+    arquivo.close
+
+    novaLista = []
+    for dados in listaClientes:
+        nome,cpf,nPessoas,tipoQuarto,nDias,valor,status = dados.split(";")
+        clientes = {"nome" : nome, "cpf" : cpf, "nPessoas" : nPessoas, "tipoQuarto" : tipoQuarto, "valor" : valor, "nDias" : nDias, "status" : status}
+        novaLista.append(clientes)
+    return novaLista
+
+
+def funcaoAltera(DadosAtt):
+    arquivo = open("database.txt", "w")
+    for i in DadosAtt:
+        arquivo.write(f"{i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['valor']},{i['nDias']},{i['status']},\n")
+    arquivo.close
+
+#Entrada de cliente
+def funcaoCheckIn():
+    cpf = input("Procurar por cpf: ")
+    novaLista = funcaoBusca()
+    reservaEsc = 0
+    reserva = 0
+    for i in novaLista:
+        if(cpf == i['cpf']):
+            reserva+=1
+            print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['valor']},{i['nDias']},{i['status']},\n")
+    reservaEsc = input(int(input("Escolha a reserva: ")))
+    reserva = 0
+    for i in novaLista:
+        if(cpf == i['cpf']):
+            reserva+=1
+            if(reserva == reservaEsc):
+                i['status'] = "A"
+    funcaoAltera(novaLista)
+    print("Check in realizado com sucesso!!")
 
 def alterar_linha(arquivo,nLinha,novalinha):
     with open(arquivo,'r') as f:
@@ -70,18 +110,17 @@ def alterar_linha(arquivo,nLinha,novalinha):
             else:
                 f.write(i)
 
-
-def funcaoCheckIn():
-  with open("database.txt", "r") as banco:
-    lista = banco.readlines()
-  with open('database.txt', 'w') as banco:
-      cpf = input("cpf aq: ")
-      for cpf in lista:
-        if lista.index(cpf) == 1:
-          banco.write("Nome: teste; CPF: teste; Número de pessoas hospedadas: teste; Tipo de quarto: teste; Dias de hospedagem: teste; Valor total: teste; Status: teste" + "\n")
+# def funcaoCheckIn():
+#   with open("database.txt", "r") as banco:
+#     lista = banco.readlines()
+#   with open('database.txt', 'w') as banco:
+#       cpf = input("cpf aq: ")
+#       for cpf in lista:
+#         if lista.index(cpf) == 1:
+#           banco.write("Nome: teste; CPF: teste; Número de pessoas hospedadas: teste; Tipo de quarto: teste; Dias de hospedagem: teste; Valor total: teste; Status: teste" + "\n")
           
-        else:
-          banco.write(lista)
+#         else:
+#           banco.write(lista)
     
 while True:
 
