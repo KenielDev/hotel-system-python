@@ -55,7 +55,7 @@ def funcaoCadastra():
 
   #insere o cadastro no banco
 
-  banco.writelines("Nome: {}; CPF: {}; Número de pessoas hospedadas: {}; Tipo de quarto: {}; Dias de hospedagem: {}; Valor total: {}; Status: {}".format(insereCliente,insereCpf,numeroPessoas,tipoQuarto,numeroDias,valor,status[0]) + "\n")
+  banco.writelines("{},{},{},{},{},{},{},".format(insereCliente,insereCpf,numeroPessoas,tipoQuarto,numeroDias,valor,status[0]) + "\n")
   
   banco.close()
   
@@ -67,30 +67,31 @@ def funcaoBusca():
     arquivo.close
 
     novaLista = []
-    for dados in listaClientes:
-        nome,cpf,nPessoas,tipoQuarto,nDias,valor,status = dados.split(";")
-        clientes = {"nome" : nome, "cpf" : cpf, "nPessoas" : nPessoas, "tipoQuarto" : tipoQuarto, "valor" : valor, "nDias" : nDias, "status" : status}
+    for i in listaClientes:
+        insereCliente,insereCpf,nPessoas,tipoQuarto,valor,nDias,status,nothing = i.split(",")
+        clientes = {"nome" : insereCliente, "cpf" : insereCpf, "nPessoas" : nPessoas, "tipoQuarto" : tipoQuarto, "nDias" : nDias, "valor" : valor, "status" : status}
         novaLista.append(clientes)
     return novaLista
 
 
-def funcaoAltera(DadosAtt):
+def funcaoAltera(novaLista):
     arquivo = open("database.txt", "w")
-    for i in DadosAtt:
-        arquivo.write(f"{i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['valor']},{i['nDias']},{i['status']},\n")
+    for i in novaLista:
+        arquivo.write(f"{i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
     arquivo.close
 
 #Entrada de cliente
 def funcaoCheckIn():
     cpf = input("Procurar por cpf: ")
+    
     novaLista = funcaoBusca()
     reservaEsc = 0
     reserva = 0
     for i in novaLista:
         if(cpf == i['cpf']):
             reserva+=1
-            print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['valor']},{i['nDias']},{i['status']},\n")
-    reservaEsc = input(int(input("Escolha a reserva: ")))
+            print(f"Reserva n°:{reserva} - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    reservaEsc = int(input("> "))
     reserva = 0
     for i in novaLista:
         if(cpf == i['cpf']):
@@ -98,29 +99,103 @@ def funcaoCheckIn():
             if(reserva == reservaEsc):
                 i['status'] = "A"
     funcaoAltera(novaLista)
+    
     print("Check in realizado com sucesso!!")
 
-def alterar_linha(arquivo,nLinha,novalinha):
-    with open(arquivo,'r') as f:
-        texto=f.readlines()
-    with open(arquivo,'w') as f:
-        for i in texto:
-            if texto.index(i) == nLinha:
-                f.write(novalinha +'\n')
-            else:
-                f.write(i)
 
-# def funcaoCheckIn():
-#   with open("database.txt", "r") as banco:
-#     lista = banco.readlines()
-#   with open('database.txt', 'w') as banco:
-#       cpf = input("cpf aq: ")
-#       for cpf in lista:
-#         if lista.index(cpf) == 1:
-#           banco.write("Nome: teste; CPF: teste; Número de pessoas hospedadas: teste; Tipo de quarto: teste; Dias de hospedagem: teste; Valor total: teste; Status: teste" + "\n")
-          
-#         else:
-#           banco.write(lista)
+def funcaoCheckOut():
+    cpf = input("Procurar por cpf: ")
+    
+    novaLista = funcaoBusca()
+    reservaEsc = 0
+    reserva = 0
+    for i in novaLista:
+        if(cpf == i['cpf']):
+            reserva+=1
+            print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    reservaEsc = int(input("> "))
+    reserva = 0
+    for i in novaLista:
+        if(cpf == i['cpf']):
+            reserva+=1
+            if(reserva == reservaEsc):
+                i['status'] = "F"
+    funcaoAltera(novaLista)
+    
+    print("Check out realizado com sucesso!!")
+
+def funcaoAlterarReserva():
+    cpf = input("Procurar por cpf: ")
+    
+    novaLista = funcaoBusca()
+    reservaEsc = 0
+    reserva = 0
+    for i in novaLista:
+        if(cpf == i['cpf']):
+            reserva+=1
+            print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    reservaEsc = int(input("> "))
+    reserva = 0
+    for i in novaLista:
+        if(cpf == i['cpf']):
+            reserva+=1
+            if(reserva == reservaEsc):
+                    i['nPessoas'] = int(input("Numero de pessoas: "))
+                    i['nDias'] = int(input("Numero de dias: "))
+                    i['tipoQuarto'] = input("Tipo de quarto (<S>Standar <D>Delux <P>Premium): ").upper()
+                    i['status'] = input("Status do quarto: ").upper()
+                    if(i['tipoQuarto'] == "S"): i['valor'] = (100*i['nPessoas'])*i['nDias']
+                    elif(i['tipoQuarto'] == "D"): i['valor'] = (100*i['nPessoas'])*i['nDias']
+                    elif(i['tipoQuarto'] == "P"): i['valor'] = (100*i['nPessoas'])*i['nDias']
+    funcaoAltera(novaLista)
+    
+    print("Alteração realizada com sucesso!!")
+
+def relatorio():
+    
+    novaLista = funcaoBusca()
+    cho = int(input("1 - Relatório de todas as reservas com status R\n2 - Relatório de todas as reservas com status C\n3 - Relatório de todas as reservas com status A\n4 - Relatório de todas as reservas com status F\n5 - Relatório total recebido\n6 – Relatório de Reserva por pessoa\n> "))
+    if cho == 1:
+        reserva = 0
+        for i in novaLista:
+            if("R" == i['status']):
+                reserva+=1
+                print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    elif cho == 2: 
+        reserva = 0
+        for i in novaLista:
+            if("C" == i['status']):
+                reserva+=1
+                print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    elif cho == 3: 
+        
+        reserva = 0
+        for i in novaLista:
+            if("A" == i['status']):
+                reserva+=1
+                print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    elif cho == 4: 
+        
+        reserva = 0
+        for i in novaLista:
+            if("F" == i['status']):
+                reserva+=1
+                print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+    elif cho == 5: 
+        
+        totalRecebido=0
+        for i in novaLista:
+            totalRecebido+=int(i["valor"])
+        print(f"Total Recebido = {totalRecebido}")
+    elif cho == 6: 
+        cpf = input("Procurar por cpf: ")
+        
+        reserva = 0
+        for i in novaLista:
+            if(cpf == i['cpf']):
+                reserva+=1
+                print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+
     
 while True:
 
@@ -143,4 +218,8 @@ while True:
   elif opcao == 2: 
     funcaoCheckIn()
 
-  
+  elif opcao == 3:
+    funcaoCheckOut()  
+
+  elif opcao == 4:
+    funcaoAlterarReserva()

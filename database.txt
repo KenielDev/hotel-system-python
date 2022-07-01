@@ -1,1 +1,2 @@
-Nome: keniel; CPF: 12218017911; Número de pessoas hospedadas: 4; Tipo de quarto: s; Dias de hospedagem: 2; Valor total: 800; Status: R;
+keniel nunes,12218017911,3,d,3,900,A,
+jao,12218017911,2,s,6,1200,A,
