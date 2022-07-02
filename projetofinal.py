@@ -92,7 +92,6 @@ def funcaoCheckIn():
     cpf = input("Procurar por cpf: ")
     
     novaLista = funcaoBusca()
-    selecionaReserva = 0
     reserva = 0
     for i in novaLista:
         if(cpf == i['cpf']):
@@ -139,7 +138,6 @@ def funcaoAlterarReserva():
     cpf = input("Procurar por cpf: ")
     
     novaLista = funcaoBusca()
-    selecionaReserva = 0
     reserva = 0
     for dados in novaLista:
         if(cpf == dados['cpf']):
