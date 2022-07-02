@@ -120,8 +120,8 @@ def funcaoCheckOut():
     reserva = 0
     for i in novaLista:
         if(cpf == i['cpf']):
-            reserva+=1
-            print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+            reserva += 1
+            print(f"Reserva n°:{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
     selecionaReserva = int(input("Selecione a reserva que deseja alterar: "))
     reserva = 0
     for i in novaLista:
@@ -132,7 +132,7 @@ def funcaoCheckOut():
                 i['status'] = "F"
     funcaoAltera(novaLista)
     
-    print("Check out realizado com sucesso!!")
+    print("Check out realizado com sucesso!!!")
 
 #altera os dados da reserva
 def funcaoAlterarReserva():
@@ -144,7 +144,7 @@ def funcaoAlterarReserva():
     for dados in novaLista:
         if(cpf == dados['cpf']):
             reserva+=1
-            print(f"Reserva<{reserva}> - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
+            print(f"Reserva n°:{reserva} - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
     selecionaReserva = int(input("Selecione a reserva que deseja alterar: "))
     reserva = 0
     for dados in novaLista:
@@ -163,6 +163,7 @@ def funcaoAlterarReserva():
     
     print("Alteração realizada com sucesso!!")
 
+#relatorios
 def funcaoRelatorio():
     
     novaLista = funcaoBusca()
@@ -171,33 +172,33 @@ def funcaoRelatorio():
         reserva = 0
         for i in novaLista:
             if("R" == i['status']):
-                reserva+=1
-                print(f"Reserva<{reserva}> - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
+                reserva += 1
+                print(f"Reserva n°:{reserva} - {i['nome']},{i['cpf']},{i['nPessoas']},{i['tipoQuarto']},{i['nDias']},{i['valor']},{i['status']},\n")
     elif opcaoRelatorio == 2: 
         reserva = 0
         for dados in novaLista:
             if("C" == dados['status']):
                 reserva += 1
-                print(f"Reserva<{reserva}> - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
+                print(f"Reserva n°:{reserva} - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
     elif opcaoRelatorio == 3: 
         
         reserva = 0
         for dados in novaLista:
             if("A" == dados['status']):
                 reserva+=1
-                print(f"Reserva<{reserva}> - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
+                print(f"Reserva n°:{reserva} - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
     elif opcaoRelatorio == 4: 
         
         reserva = 0
         for dados in novaLista:
             if("F" == dados['status']):
                 reserva+=1
-                print(f"Reserva<{reserva}> - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
+                print(f"Reserva n°:{reserva} - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
     elif opcaoRelatorio == 5: 
         
         totalRecebido = 0
         for dados in novaLista:
-            totalRecebido+=int(dados["nDias"])
+            totalRecebido += int(dados["nDias"])
         print(f"Total Recebido = {totalRecebido}")
     elif opcaoRelatorio == 6: 
         cpf = input("Procurar por cpf: ")
@@ -206,8 +207,9 @@ def funcaoRelatorio():
         for dados in novaLista:
             if(cpf == dados['cpf']):
                 reserva+=1
-                print(f"Reserva<{reserva}> - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
-    
+                print(f"Reserva n°:{reserva} - {dados['nome']},{dados['cpf']},{dados['nPessoas']},{dados['tipoQuarto']},{dados['nDias']},{dados['valor']},{dados['status']},\n")
+
+#menu    
 while True:
 
   print("          *** Menu ***\n"
